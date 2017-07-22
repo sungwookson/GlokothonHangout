@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,35 +18,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 import com.glocoders.hangout.database.FirebaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-import java.io.ByteArrayOutputStream;
-import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
-
-import com.glocoders.hangout.database.FirebaseHelper;
+import java.util.HashMap;
 
 
 public class JoinActivity extends AppCompatActivity {
+    private static FirebaseAuth mAuth;
 
     // DB
     FirebaseHelper fbHelper = new FirebaseHelper();
@@ -76,6 +67,11 @@ public class JoinActivity extends AppCompatActivity {
     Uri photoUri;
     int RESIZE_WIDTH = 250;
     int RESIZE_HEIGHT = 250;
+    String profile_image;
+
+    // REST
+    String url = "http://10.10.10.201:8080/user/info";
+    AQuery aq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +90,37 @@ public class JoinActivity extends AppCompatActivity {
         image_picture = (ImageView) findViewById(R.id.image_picture);
 
         setListener();
+    }
+
+    public void pushtoREST() {
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        String email = edit_id.getText().toString();
+//        uid = //
+        String nickname = edit_nickname.getText().toString();
+        String age = edit_age.getText().toString();
+        String detail = edit_self_introduce.getText().toString();
+        String uid = fbHelper.getCurrentAuth().getCurrentUser().getUid();
+
+        params.put("email", email);
+        params.put("uid", uid);
+        params.put("nickname", nickname);
+        params.put("age", age);
+        params.put("detail", detail);
+//        params.put("sampleFile", profile_image);
+
+        aq = new AQuery(getApplicationContext());
+        aq.ajax(url, params, String.class, new AjaxCallback<String>() {
+            @Override
+            public void callback(String url, String object, AjaxStatus status) {
+                if (status.getCode() == 200) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "입력정보를 확인하세요", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
     }
 
     private void setListener() {
@@ -119,10 +146,11 @@ public class JoinActivity extends AppCompatActivity {
     }
 
     private void createUser() {
-        fbHelper.createAccount(str_id, str_pw);
+        createAccount(str_id, str_pw);
 
         this.finish();
     }
+
 
     @Override
     protected void onStart() {
@@ -153,7 +181,7 @@ public class JoinActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "사진을 추가하였습니다", Toast.LENGTH_SHORT).show();
 
-//                    bImgLink = getByteArrayFromBitmap(resized);
+                    profile_image = getByteArrayFromBitmap(resized);
 //                    사진을 바이트 어레이로 바꿔서 저장함
 
                     image_picture.setVisibility(View.VISIBLE);
@@ -168,13 +196,39 @@ public class JoinActivity extends AppCompatActivity {
     }
 
 
-    public byte[] getByteArrayFromBitmap(Bitmap bitmap) {
+
+    // stream -> byte -> string(encoded)
+    public String getByteArrayFromBitmap(Bitmap bitmap) {
         //Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] data = stream.toByteArray();
+        String encoded = Base64.encodeToString(data, Base64.DEFAULT);
 
-        return data;
+        return encoded;
+    }
+
+    public void createAccount(String email, String password) {
+        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG CREATE", "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.d("TAG CREATE", "A user created failed!");
+                        } else {
+                            FirebaseUser user = task.getResult().getUser();
+                            databaseRef.child("users").child(user.getUid()).setValue(fbHelper.getUserInformation(user));
+                            pushtoREST();
+                        }
+                    }
+                });
     }
 
 }

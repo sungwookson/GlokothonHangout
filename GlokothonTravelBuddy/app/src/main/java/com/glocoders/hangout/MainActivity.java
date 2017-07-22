@@ -53,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseApp.initializeApp(MainActivity.this);
-                fbHelper = new FirebaseHelper();
-                fbHelper.initUserAuth();
-                fbHelper.setAuthListener();
 
                 signInAccount(edit_id.getText().toString(), edit_pwd.getText().toString());
             }
