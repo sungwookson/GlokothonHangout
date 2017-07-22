@@ -1,6 +1,5 @@
 package com.glocoders.hangout;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,10 +15,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-/**
- * Created by sang on 2017-07-22.
- */
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -58,6 +53,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         double a = 40.689247;
@@ -67,11 +63,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(a, b)).title("Statue of Liberty").snippet("I hope to gothere"));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(a, b)).title("Statue of Liberty") .snippet("I hope to gothere"));
 
         CameraPosition Liberty = CameraPosition.builder().target(new LatLng(a, b)).zoom(16).bearing(0).tilt(45).build();
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
-
     }
 }
+
