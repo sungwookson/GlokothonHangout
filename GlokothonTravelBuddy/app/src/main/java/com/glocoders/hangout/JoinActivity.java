@@ -120,36 +120,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private void createUser() {
         fbHelper.createAccount(str_id, str_pw);
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    // Create URL
-                    URL UserInfoEndpoint = new URL("https://10.10.10.201:8080/user/info");
 
-                    // Create connection
-                    HttpsURLConnection myConnection = (HttpsURLConnection) UserInfoEndpoint.openConnection();
-                    myConnection.setRequestMethod("POST");
-
-                    String req_uid = "uid="+fbHelper.getCurrentAuth().getCurrentUser().getUid();
-                    String req_email = "email="+fbHelper.getCurrentAuth().getCurrentUser().getEmail();
-                    String req_nickname = "email="+fbHelper.getCurrentAuth().getCurrentUser().getDisplayName();
-                    String req_age = "age=22";
-                    String req_detail = "detail=asdf";
-                    String req_profile = "sampleFile=qq";
-
-                    myConnection.setDoOutput(true);
-//                    myConnection.getOutputStream().write();
-                    if (myConnection.getResponseCode() == 200){
-
-                    }else{
-
-                    }
-                }catch (Exception e){
-
-                }
-            }
-        });
         this.finish();
     }
 

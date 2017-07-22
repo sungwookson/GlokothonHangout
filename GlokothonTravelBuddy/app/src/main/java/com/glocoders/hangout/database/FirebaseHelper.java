@@ -1,18 +1,11 @@
 package com.glocoders.hangout.database;
 
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.glocoders.hangout.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,29 +61,6 @@ public class FirebaseHelper {
                         }
                     }
                 });
-    }
-
-    public int signInAccount(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (task.isSuccessful() == false) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            code = -1;
-                        }else{
-                            code = 1;
-                        }
-                    }
-                });
-
-        return code;
     }
 
     public HashMap<String, String> getUserInformation(FirebaseUser user) {
