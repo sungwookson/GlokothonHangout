@@ -3,7 +3,7 @@ let schema = mongoose.Schema({
     "index": { type: String }
 
 }, {
-    collection: "users"
+    collection: "user"
 });
 
 module.exports = schema;
