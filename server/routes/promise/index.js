@@ -8,31 +8,53 @@ router.route('/:uid').get(function (req, res) {
     let userModel = req.app.get('database').user;
     let uid = req.params.uid;
     console.log(uid);
-    promiseModel.find({"uid" : uid}, function(err, docs){
-        if (err || typeof docs[0] === "undefined"){
+    promiseModel.find({
+        "uid": uid
+    }, function (err, docs) {
+        if (err || typeof docs[0] === "undefined") {
             res.status(400).end();
-        }
-        else{
+        } else {
             let category = docs[0].category;
-            promiseModel.find({"category" : category, "uid": { $ne: uid } }, function(err, _docs){
-                if(err){
-                    res.status(500).end();
+            console.log(category);
+            promiseModel.find({
+                "category": category,
+                "uid": {
+                    $ne: uid
                 }
-                else{
+            }, function (err, _docs) {
+                if (err) {
+                    res.status(500).end();
+                } else {
                     res.status(200);
-                    new Promise(function(resolve,reject){
-                        for(var i =0;i<_docs.length;i++){
-                        _docs[i].age = userModel.getAgeFromUid(_docs[i].uid);
-                    }
-                    resolve();
-                    }).then(function(){
-                        res.json(_docs);
-                    }).catch(function(){});
+                    new Promise(function (resolve, reject) {
+
+                        let promises = [];
+                        for (var i = 0; i < _docs.length; i++) {
+                            promises.push(new Promise(function (_resolve, _reject) {
+                                userModel.getAgeFromUid(_docs[i].uid, _resolve);
+                            }));
+                        }
+                        Promise.all(promises).then(function (results) {
+                            console.log(results.length);
+                            let response = _docs;
+                            for (var i = 0; i < results.length; i++) {
+                                response[i].age = results[i];
+                                console.log(response[i].age);
+                                console.log("COUNT :: "+ i);
+                            }
+                            console.log(response);
+                            res.json(response);
+                        }).catch(function () {});
+
+                    }).then(function () {
+                    }).catch(function () {});
                 }
             });
         }
-    }).sort({"createDate" : -1});
-    
+    }).sort({
+        "createDate": -1
+    });
+
 });
 
 /**

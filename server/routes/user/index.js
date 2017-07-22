@@ -36,12 +36,12 @@ router.route('/info').post(function (req, res) {
         "picture": picture,
         "age": age,
         "detail": detail
-    }).save(function (err) {
+    }).save(function (err, user) {
         if (err) {
             res.status(400).end();
         }
         else {
-            res.status(200).end();
+            res.status(201).end();
         }
     });
 
