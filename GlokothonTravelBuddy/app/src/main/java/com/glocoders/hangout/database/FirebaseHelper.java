@@ -32,7 +32,6 @@ public class FirebaseHelper {
     int code;
 
     public void initUserAuth() {
-
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -72,7 +71,7 @@ public class FirebaseHelper {
     }
 
     public int signInAccount(String email, String password) {
-
+        mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -82,11 +81,11 @@ public class FirebaseHelper {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
+                        if (task.isSuccessful() == false) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            code = 1;
-                        }else{
                             code = -1;
+                        }else{
+                            code = 1;
                         }
                     }
                 });
