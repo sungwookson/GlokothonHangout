@@ -1,5 +1,9 @@
 var router = require("express").Router();
 var fs = require("fs");
+    util = require("util");
+
+var mime = require("mime");
+
 const fileUpload = require('express-fileupload');
 
 
@@ -69,6 +73,10 @@ router.route('/info/:userId').get(function (req, res) {
             res.status(400).end();
         }
         else {
+            var src = doc.picture;
+            var data = fs.readFileSync(src).toString("base64");
+            var dataUri = util.format("data:%s;base64,%s", mime.lookup(src), data);
+            doc.picture = dataUri;
             res.status(200).json(doc);
         }
     });
