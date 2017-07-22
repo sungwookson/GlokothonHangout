@@ -29,7 +29,7 @@ public class FirebaseHelper {
     private static FirebaseAuth mAuth;
     private static FirebaseAuth.AuthStateListener mAuthListener;
     private static String TAG = "FB TAG";
-
+    int code;
 
     public void initUserAuth() {
 
@@ -51,12 +51,6 @@ public class FirebaseHelper {
         final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, e.toString());
-                    }
-                })
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -67,7 +61,9 @@ public class FirebaseHelper {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.d(TAG, "A user created failed!");
+                            code = -1;
                         } else {
+                            code = 1;
                             FirebaseUser user = task.getResult().getUser();
                             databaseRef.child("users").child(user.getUid()).setValue(getUserInformation(user));
                         }
@@ -75,7 +71,8 @@ public class FirebaseHelper {
                 });
     }
 
-    public void signInAccount(String email, String password) {
+    public int signInAccount(String email, String password) {
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -87,9 +84,14 @@ public class FirebaseHelper {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            code = 1;
+                        }else{
+                            code = -1;
                         }
                     }
                 });
+
+        return code;
     }
 
     public HashMap<String, String> getUserInformation(FirebaseUser user) {
