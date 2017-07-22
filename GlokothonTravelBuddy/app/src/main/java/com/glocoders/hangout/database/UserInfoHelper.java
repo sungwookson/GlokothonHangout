@@ -14,7 +14,8 @@ import java.util.List;
  */
 
 public class UserInfoHelper extends SQLiteOpenHelper{
-    String TABLENAME = "USER_INFO";
+    String LOGIN_TABLE = "LOGIN_TABLE";
+    String USER_TABLE = "USER_TABLE";
 
     public UserInfoHelper(Context context, String name, int version) {
         super(context, name, null, version);
@@ -22,77 +23,67 @@ public class UserInfoHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLENAME + "(" +
-                    "uid TEXT NOT NULL, " +
-                    "email TEXT NOT NULL, " +
-                    "passwd TEXT NOT NULL, " +
-                    "detail TEXT NOT NULL, " +
-                    "real_name TEXT NOT NULL, " +
-                    "nick_name TEXT NOT NULL, " +
-                    "profile_image TEXT NOT NULL," +
-                    "age INTEGER NOT NULL," +
-                    "is_auto INTEGER NOT NULL)");
+        // is_auto == 1 > auto , is_auto == 0 -> not auto
+        db.execSQL("CREATE TABLE " + LOGIN_TABLE + "(" +
+                   "email TEXT NOT NULL, " +
+                   "passwd TEXT NOT NULL, " +
+                   "is_auto INTEGER NOT NULL)");
 
+        db.execSQL("CREATE TABLE " + USER_TABLE + "(" +
+                   "uid TEXT NOT NULL, " +
+                   "detail TEXT NOT NULL, " +
+                   "real_name TEXT NOT NULL, " +
+                   "nick_name TEXT NOT NULL, " +
+                   "profile_image TEXT NOT NULL," +
+                   "age INTEGER NOT NULL)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLENAME);
+        db.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         onCreate(db);
     }
 
-    public void insert(String uid, String email, String passwd, String detail, String real_name, String nick_name,
-                       String profile_image, int age, int is_auto) {
+    public void loginSetting(String email, String passwd, int is_auto) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("uid", uid);
-        values.put("email", email);
-        values.put("passwd", passwd);
-        values.put("detail", detail);
-        values.put("real_name", real_name);
-        values.put("nick_name", nick_name);
-        values.put("profile_image", profile_image);
-        values.put("age", age);
         values.put("is_auto", is_auto);
 
-        db.insert(TABLENAME, null, values);
+        if (getCount(LOGIN_TABLE) == 1)
+            db.update(LOGIN_TABLE, values, "email=? and passwd=?", new String[]{email, passwd});
+
+        else {
+            values.put("email", email);
+            values.put("passwd", passwd);
+            db.insert(LOGIN_TABLE, null, values);
+        }
         db.close();
     }
 
-    public void update (String before_passwd, String passwd, String detail, String profile_image, String nick_name, int age, int is_auto) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("passwd", passwd);
-        values.put("detail", detail);
-        values.put("nick_name", nick_name);
-        values.put("profile_image", profile_image);
-        values.put("age", age);
-        values.put("is_auto", is_auto);
-
-        db.update(TABLENAME, values, "passwd=?", new String[]{before_passwd});
-        db.close();
-    }
-
-    public List<String> select() {
+    public List<String> readLogin() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLENAME, null, null, null, null, null, null, null);
-        List<String> user_info = new ArrayList<String>();
+        Cursor c = db.query(LOGIN_TABLE, null, null, null, null, null, null);
+        List<String> login_data = new ArrayList<String>();
+        c.moveToNext();
 
         try {
-            user_info.add(c.getString(c.getColumnIndex("uid")));
-            user_info.add(c.getString(c.getColumnIndex("email")));
-            user_info.add(c.getString(c.getColumnIndex("passwd")));
-            user_info.add(c.getString(c.getColumnIndex("detail")));
-            user_info.add(c.getString(c.getColumnIndex("real_name")));
-            user_info.add(c.getString(c.getColumnIndex("nick_name")));
-            user_info.add(c.getString(c.getColumnIndex("profile_image")));
-            user_info.add(Integer.toString(c.getInt(c.getColumnIndex("age"))));
-            user_info.add(Integer.toString(c.getInt(c.getColumnIndex("is_auto"))));
+            login_data.add(c.getString(c.getColumnIndex("email")));
+            login_data.add(c.getString(c.getColumnIndex("passwd")));
+            login_data.add(c.getString(c.getColumnIndex("is_auto")));
         } catch (Exception e) {
-            user_info.add("error");
+            login_data.add(e.toString());
         }
-        return user_info;
+        return login_data;
     }
+
+    public int getCount(String tablename) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT Count(*) FROM " + tablename, null);
+        c.moveToNext();
+        return c.getInt(0);
+
+    }
+
 }

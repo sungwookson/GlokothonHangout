@@ -42,7 +42,7 @@ public class ChoicePlaceActivity extends AppCompatActivity
     NavigationView navigationView;
     Toolbar toolbar;
 
-    EditText edit_where; //어디서
+    EditText edit_where, plan_what; //어디서
     Button btn_choice_date; // 언제 (버튼)
     CalendarView choice_date; // 언제 (달력)
     TextView show_date; //언제 (보여줌)
@@ -51,9 +51,10 @@ public class ChoicePlaceActivity extends AppCompatActivity
     ArrayAdapter<String> adapter;
 
     String sendDateToRest;
+    Button search_people;
 
     // REST
-    String url = "http://10.10.10.201:8080/user/info";
+    String url = "http://10.10.10.201:8080/promise";
     AQuery aq;
 
     @Override
@@ -62,11 +63,13 @@ public class ChoicePlaceActivity extends AppCompatActivity
         setContentView(R.layout.activity_choice_place);
 
         edit_where = (EditText) findViewById(R.id.edit_where); // 어디서
+        plan_what = (EditText) findViewById(R.id.plan_what); //무엇을 (한마디)
 //        edit_date = (EditText) findViewById(R.id.edit_date); // 언제
         btn_choice_date = (Button) findViewById(R.id.btn_choice_date); // 언제 (버튼)
         choice_date = (CalendarView) findViewById(R.id.choice_date); // 언제 (달력)
         choice_date.setVisibility(View.INVISIBLE);
         show_date = (TextView) findViewById(R.id.show_date); // 언제 (보여줌)
+        search_people = (Button) findViewById(R.id.btn_search); // 주변 사람들 검색 및 자기 정보 등록
 
         initListener();
         initNavigation();
@@ -95,6 +98,13 @@ public class ChoicePlaceActivity extends AppCompatActivity
                 choice_date.setVisibility(View.VISIBLE);
                 Log.d("calendar","[BUTTON] clicked, calendar open!");
 
+            }
+        });
+
+        search_people.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pushtoREST();
             }
         });
 
@@ -223,7 +233,8 @@ public class ChoicePlaceActivity extends AppCompatActivity
     public void pushtoREST() {
         HashMap<String, Object> params = new HashMap<>();
 
-        //언제
+        //plan(한마디)
+        String plan = plan_what.getText().toString();
 
         //어디서
         String where = edit_where.getText().toString();
@@ -236,16 +247,17 @@ public class ChoicePlaceActivity extends AppCompatActivity
         String what = spinner.getSelectedItem().toString();
         //category
 
-
         params.put("location", loc);
         params.put("category", what);
         params.put("date",sendDateToRest);
+        params.put("plan", plan);
+        params.put("uid", "4");
 
         aq = new AQuery(getApplicationContext());
         aq.ajax(url, params, String.class, new AjaxCallback<String>() {
             @Override
             public void callback(String url, String object, AjaxStatus status) {
-                if (status.getCode() == 200) {
+                if (status.getCode() == 200 || status.getCode() == 201) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "입력정보를 확인하세요", Toast.LENGTH_LONG).show();

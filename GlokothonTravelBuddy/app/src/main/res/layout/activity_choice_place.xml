@@ -26,15 +26,8 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-
-
                 android:layout_height="wrap_content"
                 android:gravity="center">
-
-                <TextView android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
             </LinearLayout>
 
             <TableLayout
@@ -42,6 +35,19 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:stretchColumns="1">
+
+                <TableRow>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:gravity="center"
+                        android:text="한마디 "/>
+                    <EditText android:id="@+id/plan_what"
+                        android:layout_span="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="어디서 무엇을 할 것인가요?"/>
+
+                </TableRow>
 
                 <TableRow>
 
