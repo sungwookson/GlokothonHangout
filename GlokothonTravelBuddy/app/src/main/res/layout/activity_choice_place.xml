@@ -28,13 +28,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center">
+
                 <TextView android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <Spinner android:id="@+id/spinner_what"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </Spinner>
+
+
+
             </LinearLayout>
 
             <TableLayout
@@ -71,6 +71,21 @@
                         android:id="@+id/edit_date"
                         android:hint="YYYY/MM/DD" />
 
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:gravity="center"
+                        android:text="무엇을" />
+
+                    <Spinner
+                        android:id="@+id/spinner_what"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </Spinner>
 
                 </TableRow>
 
