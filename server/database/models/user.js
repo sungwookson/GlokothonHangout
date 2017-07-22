@@ -1,11 +1,11 @@
 let schema = require('../schemas/user');
 let mongoose = require('mongoose');
 
-schema.static('getAgeFromUid', function(uid, resolve){
-    console.log(uid);
+schema.static('getInfoFromUid', function(uid, resolve){
+    
     this.findOne({"uid" : uid}, function(err, doc){
-        console.log(doc.age);
-        resolve(doc.age);
+        
+        resolve(doc);
     });
 })
 
