@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="rules-0.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/12b9a63fb57787faa118ed343f276b511dc3c55a/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/12b9a63fb57787faa118ed343f276b511dc3c55a/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/2a08726f1cdce9bf90e106315709978dd322350c/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/2a08726f1cdce9bf90e106315709978dd322350c/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/test/rules/0.5/rules-0.5-sources.jar!/" />
+      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/test/rules/0.5/rules-0.5-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

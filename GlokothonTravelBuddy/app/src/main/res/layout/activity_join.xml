@@ -1,93 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.glocoders.hangout.JoinActivity">
+    android:id="@+id/layout_parent"
+
+    >
+
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="아이디 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_id"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="비밀번호 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_pw"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="닉네임 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_nickname"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="이름 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_realname"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content">
-        <TextView android:text="나이 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_age"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="자기소개 입력"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_up_self_introduce"
-            android:lines="6"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <Button android:id="@+id/select_profile_image"
-        android:layout_width="wrap_content"
+        android:id="@+id/layout_inner"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="프로필 이미지 선택"/>
-    <Button android:id="@+id/sign_up_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="회원가입"/>
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context="com.glocoders.hangout.JoinActivity">
 
-</LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:textSize="30dp"
+                    android:text="프로필 입력"
+                    />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아이디 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_id"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_pw"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="닉네임 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_nickname"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이름 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_realname"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나이 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_age"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:text="자기소개 입력" />
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:id="@+id/sign_up_self_introduce"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:lines="3" />
+
+            </TableRow>
+
+        </TableLayout>
+
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:id="@+id/image_picture"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/select_profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진 선택" />
+
+            <Button
+                android:id="@+id/sign_up_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원 가입" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
+
