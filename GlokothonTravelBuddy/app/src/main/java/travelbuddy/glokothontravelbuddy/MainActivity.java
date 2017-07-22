@@ -1,4 +1,4 @@
-package com.example.dsm2016.glokothontravelbuddy;
+package travelbuddy.glokothontravelbuddy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

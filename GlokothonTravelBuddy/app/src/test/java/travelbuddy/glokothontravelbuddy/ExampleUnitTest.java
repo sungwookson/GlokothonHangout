@@ -1,4 +1,4 @@
-package com.example.dsm2016.glokothontravelbuddy;
+package travelbuddy.glokothontravelbuddy;
 
 import org.junit.Test;
 
