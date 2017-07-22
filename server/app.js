@@ -2,9 +2,7 @@ let express = require('express');
 let session = require('express-session');
 var bodyParser = require('body-parser');
 let morgan = require('morgan');
-var redis = require("redis"),
-    client = redis.createClient();
-
+let router = require('./routes');
 
 let app = express();
 
@@ -24,7 +22,7 @@ app.use(session({
 
 
 app.use(bodyParser.json());
-
+app.use('/',router);
 app.listen(app.get('port'), function () {
     console.log("Started :: " + app.get('port'));
 });
