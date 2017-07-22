@@ -109,6 +109,14 @@ public class JoinActivity extends AppCompatActivity {
         params.put("detail", detail);
         params.put("sampleFile", profile_image);
 
+        User.uid = uid;
+        User.email = email;
+        User.passwd = str_pw;
+        User.detail = detail;
+        User.real_name = edit_realname.getText().toString();
+        User.profile_image = profile_image;
+        User.age = Integer.parseInt(age);
+
         aq = new AQuery(getApplicationContext());
         aq.ajax(url, params, String.class, new AjaxCallback<String>() {
             @Override

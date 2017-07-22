@@ -27,6 +27,8 @@ public class UserInfoHelper extends SQLiteOpenHelper{
                     "email TEXT NOT NULL, " +
                     "passwd TEXT NOT NULL, " +
                     "detail TEXT NOT NULL, " +
+                    "real_name TEXT NOT NULL, " +
+                    "nick_name TEXT NOT NULL, " +
                     "profile_image TEXT NOT NULL," +
                     "age INTEGER NOT NULL," +
                     "is_auto INTEGER NOT NULL)");
@@ -39,7 +41,8 @@ public class UserInfoHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void insert(String uid, String email, String passwd, String detail, String profile_image, int age, int is_auto) {
+    public void insert(String uid, String email, String passwd, String detail, String real_name, String nick_name,
+                       String profile_image, int age, int is_auto) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -47,6 +50,8 @@ public class UserInfoHelper extends SQLiteOpenHelper{
         values.put("email", email);
         values.put("passwd", passwd);
         values.put("detail", detail);
+        values.put("real_name", real_name);
+        values.put("nick_name", nick_name);
         values.put("profile_image", profile_image);
         values.put("age", age);
         values.put("is_auto", is_auto);
@@ -55,12 +60,13 @@ public class UserInfoHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    public void update (String before_passwd, String passwd, String detail, String profile_image, int age, int is_auto) {
+    public void update (String before_passwd, String passwd, String detail, String profile_image, String nick_name, int age, int is_auto) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("passwd", passwd);
         values.put("detail", detail);
+        values.put("nick_name", nick_name);
         values.put("profile_image", profile_image);
         values.put("age", age);
         values.put("is_auto", is_auto);
@@ -74,14 +80,19 @@ public class UserInfoHelper extends SQLiteOpenHelper{
         Cursor c = db.query(TABLENAME, null, null, null, null, null, null, null);
         List<String> user_info = new ArrayList<String>();
 
-        user_info.add(c.getString(c.getColumnIndex("uid")));
-        user_info.add(c.getString(c.getColumnIndex("email")));
-        user_info.add(c.getString(c.getColumnIndex("passwd")));
-        user_info.add(c.getString(c.getColumnIndex("detail")));
-        user_info.add(c.getString(c.getColumnIndex("profile_image")));
-        user_info.add(Integer.toString(c.getInt(c.getColumnIndex("age"))));
-        user_info.add(Integer.toString(c.getInt(c.getColumnIndex("is_auto"))));
-
+        try {
+            user_info.add(c.getString(c.getColumnIndex("uid")));
+            user_info.add(c.getString(c.getColumnIndex("email")));
+            user_info.add(c.getString(c.getColumnIndex("passwd")));
+            user_info.add(c.getString(c.getColumnIndex("detail")));
+            user_info.add(c.getString(c.getColumnIndex("real_name")));
+            user_info.add(c.getString(c.getColumnIndex("nick_name")));
+            user_info.add(c.getString(c.getColumnIndex("profile_image")));
+            user_info.add(Integer.toString(c.getInt(c.getColumnIndex("age"))));
+            user_info.add(Integer.toString(c.getInt(c.getColumnIndex("is_auto"))));
+        } catch (Exception e) {
+            user_info.add("error");
+        }
         return user_info;
     }
 }
