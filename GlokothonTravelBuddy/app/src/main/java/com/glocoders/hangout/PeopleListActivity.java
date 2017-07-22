@@ -4,11 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.androidquery.AQuery;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PeopleListActivity extends AppCompatActivity {
-
+    public AQuery aquery;
+    public static String REQUEST_ADDRESS = "10.10.10.179:8080/promise/"; // + UID
+    //WIFI 4
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +27,23 @@ public class PeopleListActivity extends AppCompatActivity {
         dst.set(Calendar.HOUR, 23);
 
         ListView travelerList = (ListView) findViewById(R.id.traveler_list);
-        ArrayList<Traveler> travelers = new ArrayList<Traveler>();
+        final ArrayList<Traveler> travelers = new ArrayList<Traveler>();
+        aquery = new AQuery(this);
+        Map<String,Object> param = new HashMap<String,Object>();
 
+//        param.put("id","asdjasdkasd");
+//        param.put("password","1234");
+//        aquery.ajax(REQUEST_ADDRESS, param, JSONArray.class, new AjaxCallback<JSONArray>(){
+//
+//            @Override
+//            public void callback(String url, JSONArray response, AjaxStatus status) {
+//                for(int i=0;i<response.length();i++){
+//
+//
+//
+//                }
+//            }
+//        })
         Traveler a = new Traveler("정필성", "낮잠", 2.3, 13,  src, dst);
         Traveler b = new Traveler("김민종", "민종이형의 경제학 강의", 2.9, 14,  src, dst);
         Traveler c = new Traveler("윤태훈", "태훈이의 뻘짓 감상", 1.2, 15, src, dst);
