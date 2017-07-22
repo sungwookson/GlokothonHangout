@@ -11,20 +11,28 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.glocoders.hangout.database.FirebaseHelper;
+import com.glocoders.hangout.database.UserInfoHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     FirebaseHelper fbHelper;
+    UserInfoHelper userHelper;
     EditText edit_id;
     EditText edit_pwd;
+    CheckBox auto_box;
     private static FirebaseAuth mAuth;
+    static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +45,19 @@ public class MainActivity extends AppCompatActivity {
         fbHelper.initUserAuth();
         fbHelper.setAuthListener();
 
+        userHelper = new UserInfoHelper(getApplicationContext(), "user_info.db", 1);
+        List<String> data = userHelper.select();
+        if(data.size() == 1) {
+            Log.d("login", "It's not auto");
+        } else {
+            user = new User(data);
+            auto_login();
+        }
+
         /* Sign in, Sign up */
         Button sign_in = (Button) findViewById(R.id.sign_in);
         Button sign_up = (Button) findViewById(R.id.sign_up);
+        auto_box = (CheckBox) findViewById(R.id.is_auto_login);
 
         /* ID, PW */
         edit_id = (EditText) findViewById(R.id.sign_in_id);
@@ -49,6 +67,18 @@ public class MainActivity extends AppCompatActivity {
         edit_pwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         edit_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+
+
+        auto_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    User.is_auto = true;
+                } else {
+                    User.is_auto = false;
+                }
+            }
+        });
 
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,4 +141,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void auto_login() {
+        if(user.is_auto == true) {
+            signInAccount(user.email, user.passwd);
+        }
+    }
 }
+
+class User{
+    public static String uid;
+    public static String email;
+    public static String passwd;
+    public static String detail;
+    public static String real_name;
+    public static String nick_name;
+    public static String profile_image;
+    public static int age;
+    public static boolean is_auto;
+
+    public User(List<String> user_info) {
+        uid = user_info.get(0);
+        email = user_info.get(1);
+        passwd = user_info.get(2);
+        detail = user_info.get(3);
+        real_name = user_info.get(4);
+        nick_name = user_info.get(5);
+        profile_image = user_info.get(6);
+        age = Integer.parseInt(user_info.get(7));
+        is_auto = (Integer.parseInt(user_info.get(8)) == 1) ? true : false;
+    }
+}
+
