@@ -1,5 +1,6 @@
 package com.glocoders.hangout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,10 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ChoicePlaceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,9 +35,16 @@ public class ChoicePlaceActivity extends AppCompatActivity
     NavigationView navigationView;
     Toolbar toolbar;
 
-    Spinner spinner;
+    EditText edit_where; //어디서
+    EditText edit_date; //언제
+    Spinner spinner; // 무엇을
     ArrayList<String> playList = new ArrayList<String>(Arrays.asList("식사", "술", "카페, 디저트", "여행친구", "운동", "공부", "행아웃"));
     ArrayAdapter<String> adapter;
+
+    // REST
+    String url = "http://10.10.10.201:8080/user/info";
+    AQuery aq;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +56,10 @@ public class ChoicePlaceActivity extends AppCompatActivity
     }
 
     public void initSpinner(){
-        spinner = (Spinner) findViewById(R.id.spinner_what);
+        spinner = (Spinner) findViewById(R.id.spinner_what); // 무엇을
+        edit_where = (EditText) findViewById(R.id.edit_where); // 언제
+        edit_date = (EditText) findViewById(R.id.edit_date); // 무엇을
+
         adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, playList);
         spinner.setAdapter(adapter);
     }
@@ -123,4 +141,39 @@ public class ChoicePlaceActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public void pushtoREST() {
+        HashMap<String, Object> params = new HashMap<>();
+
+        //어디서
+        String where = edit_where.getText().toString();
+        HashMap<String, Double> loc = new HashMap<>();
+        loc.put("lon", 126.97);
+        loc.put("lat", 37.56); //만약에 [서울]이 잘 안뜨면 lon, lat의 값을 바꿔보자
+        //location - lon, lat
+
+        //무엇을
+        String what = spinner.getSelectedItem().toString();
+        //category
+
+
+        params.put("location", loc);
+        params.put("category", what);
+
+        aq = new AQuery(getApplicationContext());
+        aq.ajax(url, params, String.class, new AjaxCallback<String>() {
+            @Override
+            public void callback(String url, String object, AjaxStatus status) {
+                if (status.getCode() == 200) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "입력정보를 확인하세요", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
+
 }
