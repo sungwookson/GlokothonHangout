@@ -107,7 +107,7 @@ public class JoinActivity extends AppCompatActivity {
         params.put("nickname", nickname);
         params.put("age", age);
         params.put("detail", detail);
-//        params.put("sampleFile", profile_image);
+        params.put("sampleFile", profile_image);
 
         aq = new AQuery(getApplicationContext());
         aq.ajax(url, params, String.class, new AjaxCallback<String>() {
