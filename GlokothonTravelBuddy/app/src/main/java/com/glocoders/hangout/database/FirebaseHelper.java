@@ -48,7 +48,7 @@ public class FirebaseHelper {
     }
 
     public void createAccount(String email, String password) {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnFailureListener(new OnFailureListener() {
@@ -70,23 +70,6 @@ public class FirebaseHelper {
                         } else {
                             FirebaseUser user = task.getResult().getUser();
                             databaseRef.child("users").child(user.getUid()).setValue(getUserInformation(user));
-                        }
-                    }
-                });
-    }
-
-    public void createAccount2(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG, "A user created failed!");
                         }
                     }
                 });
