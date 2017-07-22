@@ -1,4 +1,5 @@
 let schema = require('../schemas/promise');
+let mongoose = require('mongoose');
 
 schema.static('method', function(parameter){
     console.log(parameter);

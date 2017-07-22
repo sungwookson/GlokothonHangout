@@ -22,7 +22,6 @@ app.use(session({
 
 
 app.use(bodyParser.json());
-app.use('/',router);
 app.listen(app.get('port'), function () {
     console.log("Started :: " + app.get('port'));
     database.connect(app);
