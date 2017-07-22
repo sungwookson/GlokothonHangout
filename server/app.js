@@ -2,6 +2,8 @@ let express = require('express');
 let session = require('express-session');
 var bodyParser = require('body-parser');
 let morgan = require('morgan');
+var redis = require("redis"),
+    client = redis.createClient();
 
 
 let app = express();
@@ -18,6 +20,8 @@ app.use(session({
     secret: 'secret',
     resave: false
 }));
+
+
 
 app.use(bodyParser.json());
 
