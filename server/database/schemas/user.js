@@ -1,9 +1,24 @@
+/**
+ * ::::::::: USER :::::::::
+ * 
+ *      UID, 
+ *      email,
+ *      nickname, 
+ *      picture,
+ *      detail
+ */
+
 let mongoose = require('mongoose');
 let schema = mongoose.Schema({
-    "index": { type: String }
+    "uid": { type: String, required: true },
+    "email": { type: String, required: true },
+    "nickname": { type: String, required: true },
+    "picture": { type: String, required: true },
+    "age" : { type: Number, required: true },
+    "detail": { type: String, required: true }
 
 }, {
-    collection: "user"
-});
+        collection: "user"
+    });
 
 module.exports = schema;
