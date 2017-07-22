@@ -51,6 +51,10 @@ router.route('/info').post(function (req, res) {
 
 });
 router.route('/info').put(function (req, res) {
+    if(req.files) {
+        let sampleFile = req.files.sampleFile;
+        sampleFile.mv(picture);
+    }
     let userModel = req.app.get("database").user;
     userModel.update({ "uid": req.body.uid }, {
         "$set": req.body,
