@@ -48,7 +48,7 @@ public class FirebaseHelper {
     }
 
     public void createAccount(String email, String password) {
-        final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnFailureListener(new OnFailureListener() {
