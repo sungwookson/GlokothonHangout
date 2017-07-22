@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseApp.initializeApp(MainActivity.this);
+                fbHelper = new FirebaseHelper();
+                fbHelper.initUserAuth();
+                fbHelper.setAuthListener();
+
                 if (fbHelper.signInAccount(edit_id.getText().toString(), edit_pwd.getText().toString()) == 1){
                     Intent intent = new Intent(getApplicationContext(), ChoicePlaceActivity.class);
                     startActivity(intent);
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                                             dialog.cancel();
                                         }
                                     });
+                    alertDialogBuilder.show();
                 }
             }
         });
