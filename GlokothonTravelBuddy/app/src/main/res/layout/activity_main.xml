@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:hint="PW를 입력해주세요" />
+                android:inputType="textPassword"
+                android:hint="********" />
         </TableRow>
     </TableLayout>
 
