@@ -8,7 +8,8 @@
     tools:context="com.glocoders.hangout.MainActivity">
 
     <TableLayout
-        android:layout_margin="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -19,11 +20,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID"
+                android:text="e-mail"
                 android:textSize="20sp" />
 
             <EditText
-                android:hint="ID를 입력해주세요"
+                android:hint="e-mail을 입력해주세요"
                 android:gravity="center"
                 android:layout_margin="10dp"
                 android:id="@+id/sign_in_id"
@@ -39,12 +40,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="비밀번호"
+                android:text="PW"
                 android:textSize="20sp" />
 
             <EditText
                 android:gravity="center"
-                android:hint="비밀번호를 입력해주세요"
+                android:hint="PW를 입력해주세요"
                 android:layout_margin="10dp"
                 android:id="@+id/sign_in_pw"
                 android:layout_width="200sp"

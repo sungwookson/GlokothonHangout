@@ -2,12 +2,10 @@ package com.glocoders.hangout;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class PeopleListActivity extends AppCompatActivity {
 
@@ -16,27 +14,26 @@ public class PeopleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_list);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.people_recyclerview);
-        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(manager);
-
-        List<Traveler> items = new ArrayList<>();
-        Traveler[] item = new Traveler[3];
-
         Calendar src = Calendar.getInstance();
         Calendar dst = Calendar.getInstance();
 
-        src.set(Calendar.HOUR, 16);
+        src.set(Calendar.HOUR, 18);
         dst.set(Calendar.HOUR, 23);
 
-        item[0] = new Traveler("정필성", "같이 밥먹을 사람구해요!", 2.3, src, dst);
-        item[1] = new Traveler("김종민", "같이 밥먹을 사람구해요!", 2.5, src, dst);
-        item[2] = new Traveler("이상아", "같이 밥먹을 사람구해요!", 2.8, src, dst);
+        ListView travelerList = (ListView) findViewById(R.id.traveler_list);
+        ArrayList<Traveler> travelers = new ArrayList<Traveler>();
 
-        for(int i=0; i<3; i++) items.add(item[i]);
+        Traveler a = new Traveler("정필성", "낮잠", 2.3, 13,  src, dst);
+        Traveler b = new Traveler("김민종", "민종이형의 경제학 강의", 2.9, 14,  src, dst);
+        Traveler c = new Traveler("윤태훈", "태훈이의 뻘짓 감상", 1.2, 15, src, dst);
 
-//        recyclerView.setAdapter(new PeopleRecyclerAdapter(getApplicationContext(), items, R.layout.activity_people_list) );
+        travelers.add(a);
+        travelers.add(b);
+        travelers.add(c);
+
+        TravelerListAdapter adapter = new TravelerListAdapter(this, travelers, R.layout.people_list_low);
+        travelerList.setAdapter(adapter);
+
     }
 }
 

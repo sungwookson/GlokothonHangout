@@ -11,11 +11,21 @@ public class Traveler {
     private String name, activity;
     private Double distance;
     private Calendar src, dst;
+    private int age;
 
-    public Traveler(String name, String activity, Double distance, Calendar src, Calendar dst) {
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Traveler(String name, String activity, Double distance, int age, Calendar src, Calendar dst) {
         this.name = name;
         this.activity = activity;
         this.distance = distance;
+        this.age = age;
         this.src = src;
         this.dst = dst;
     }
