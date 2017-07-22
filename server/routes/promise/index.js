@@ -18,3 +18,5 @@ router.route('/promises').get(function (req, res) {
 router.route('/promises').post(function (req, res) {
     
 });
+
+module.exports = router;
