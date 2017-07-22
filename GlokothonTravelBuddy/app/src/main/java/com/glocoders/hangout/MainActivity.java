@@ -9,20 +9,27 @@ import android.view.View;
 import android.widget.Button;
 
 import com.glocoders.hangout.database.*;
+import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseHelper fbHelper = new FirebaseHelper();
+    FirebaseHelper fbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseApp.initializeApp(this);
+        fbHelper = new FirebaseHelper();
+        fbHelper.initUserAuth();
+        fbHelper.setAuthListener();
+
+
         Button sign_in = (Button) findViewById(R.id.sign_in);
         Button sign_up = (Button) findViewById(R.id.sign_up);
 
-        fbHelper.initUserAuth();
+
 
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,5 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fbHelper.removeAuthListener();
     }
 }
