@@ -9,7 +9,7 @@
 
     <TableLayout
         android:layout_margin="50dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TableRow
@@ -62,7 +62,6 @@
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         >
-
 
         <Button
             android:id="@+id/sign_in"
