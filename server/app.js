@@ -2,6 +2,7 @@ let express = require('express');
 let session = require('express-session');
 var bodyParser = require('body-parser');
 let morgan = require('morgan');
+
 let database = require('./database');
 let app = express();
 
@@ -21,7 +22,7 @@ app.use(session({
 
 
 app.use(bodyParser.json());
-
+app.use('/',router);
 app.listen(app.get('port'), function () {
     console.log("Started :: " + app.get('port'));
     database.connect(app);
