@@ -17,7 +17,7 @@ exports.connect = function (app) {
 
 
 function init(app) {
-    for (let i = 0 ; i < config.models.length; i++) {
+    for (let i = 0; i < config.models.length; i++) {
         database[config.models[i].name] = require(config.models[i].src);
     }
     app.set('database', database);
