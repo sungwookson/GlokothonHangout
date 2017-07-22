@@ -10,11 +10,12 @@
 
 let mongoose = require('mongoose');
 let schema = mongoose.Schema({
-    "uid": { type: String },
-    "email": { type: String },
-    "nickname": { type: String },
-    "picture": { type: String },
-    "detail": { type: String }
+    "uid": { type: String, required: true },
+    "email": { type: String, required: true },
+    "nickname": { type: String, required: true },
+    "picture": { type: String, required: true },
+    "age" : { type: Number, required: true },
+    "detail": { type: String, required: true }
 
 }, {
         collection: "user"
