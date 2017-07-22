@@ -1,10 +1,12 @@
 let mongoose = require('mongoose');
 let schema = mongoose.Schema({
-    uid : { type : String, require : true },
-    startDate : { type : Date, require : true },
-    endDate : { type : Date, require : true },
-    location : { type : JSON, require : true },
-    plan : { type : String, require : true }
+    category : { type : String, required : true },
+    uid : { type : String, required : true },
+    startDate : { type : String, required : true },
+    endDate : { type : String, required : true },
+    location : { type : JSON, required : true },
+    plan : { type : String, required : true },
+    createDate : { type : String, required : true, default : new Date().toLocaleString() }
 }, {
     collection: "promise"
 });

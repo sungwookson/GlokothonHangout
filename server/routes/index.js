@@ -1,27 +1,9 @@
 var router = require("express").Router();
+let userRouter = require("./user");
+let promiseRouter = require("./promise");
 
 
-
-/**
- * ::::::::: USER :::::::::
- * 
- *      UID, 
- *      email,
- *      nickname, 
- *      picture,
- *      detail
- */
-
-router.route('/users/info').post(function(req, res){
-    
-
-});
-router.route('/users/info').put(function(req, res){
-
-});
-router.route('/users/info/:userId').get(function(req, res){    
-
-});
-
+router.use('/user', userRouter);
+router.use('/promise', promiseRouter);
 
 module.exports = router;

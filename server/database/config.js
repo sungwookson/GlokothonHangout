@@ -4,6 +4,10 @@ module.exports = {
         {
             "name" : "promise",
             "src" : "./models/promise"
+        },
+        {
+            "name" : "user",
+            "src" : "./models/user"
         }
     ]
 };
