@@ -24,13 +24,18 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:hint="한마디를 입력해주세요" />
-
+                android:gravity="center">
+                <TextView android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Spinner android:id="@+id/spinner_what"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </Spinner>
+            </LinearLayout>
 
             <TableLayout
                 android:layout_width="match_parent"
