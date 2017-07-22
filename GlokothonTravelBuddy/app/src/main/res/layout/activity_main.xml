@@ -7,46 +7,77 @@
     android:orientation="vertical"
     tools:context="com.glocoders.hangout.MainActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <TableLayout
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <TextView android:text="아아디 입력"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_in_id"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
+        <TableRow
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="e-mail"
+                android:textSize="20sp" />
+
+            <EditText
+                android:hint="e-mail을 입력해주세요"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:id="@+id/sign_in_id"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PW"
+                android:textSize="20sp" />
+
+            <EditText
+                android:gravity="center"
+                android:hint="PW를 입력해주세요"
+                android:layout_margin="10dp"
+                android:id="@+id/sign_in_pw"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content" />
+
+
+        </TableRow>
+
+
+    </TableLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView android:text="비밀번호 입력"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText android:id="@+id/sign_in_pw"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_gravity="center"
+        >
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button android:id="@+id/sign_in"
+        <Button
+            android:id="@+id/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:text="sign in"
-            />
-        <Button android:id="@+id/sign_up"
+            android:text="sign in" />
+
+        <Button
+            android:id="@+id/sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sign up"
-            />
+            android:text="sign up" />
     </LinearLayout>
+
+
+
 </LinearLayout>

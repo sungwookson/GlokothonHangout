@@ -13,61 +13,87 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:hint="한마디를 입력해주세요" />
-
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:stretchColumns="1">
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:gravity="center"
-                    android:text="어디서" />
-
-                <EditText
-                    android:id="@+id/edit_where"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="어느 곳으로 떠나실 건가요?"
-
-                    />
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:gravity="center"
-                    android:text="언제" />
-
-                <EditText
-                    android:id="@+id/edit_date"
-                    android:hint="YYYY/MM/DD" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:hint="한마디를 입력해주세요" />
 
 
-            </TableRow>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:stretchColumns="1">
 
-        </TableLayout>
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:gravity="center"
+                        android:text="어디서" />
+
+                    <EditText
+                        android:id="@+id/edit_where"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="어느 곳으로 떠나실 건가요?"
+
+                        />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:gravity="center"
+                        android:text="언제" />
+
+                    <EditText
+                        android:id="@+id/edit_date"
+                        android:hint="YYYY/MM/DD" />
 
 
-    </LinearLayout>
+                </TableRow>
+
+            </TableLayout>
+
+
+
+            <fragment
+                android:layout_margin="10dp"
+                android:id="@+id/fragment_place"
+                android:name="com.glocoders.hangout.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                tools:layout="@layout/activity_main" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="검색"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
 
 
     <android.support.design.widget.NavigationView
