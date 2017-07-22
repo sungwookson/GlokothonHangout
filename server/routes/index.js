@@ -12,7 +12,11 @@ var router = require("express").Router();
  *      detail
  */
 
-router.route('/users/info').get(function(req, res){
+router.route('/users/info').post(function(req, res){
+    
+
+});
+router.route('/users/info').put(function(req, res){
 
 });
 router.route('/users/info/:userId').get(function(req, res){    
