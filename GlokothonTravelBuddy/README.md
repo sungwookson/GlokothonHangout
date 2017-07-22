@@ -1,3 +1,0 @@
-TravleBuddy  
-
-For glokothon

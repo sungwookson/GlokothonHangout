@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <include
+        layout="@layout/app_bar_choice_place"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="한마디를 입력해주세요" />
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:text="어디서" />
+
+                <EditText
+                    android:id="@+id/edit_where"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="어느 곳으로 떠나실 건가요?"
+
+                    />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:text="언제" />
+
+                <EditText
+                    android:id="@+id/edit_date"
+                    android:hint="YYYY/MM/DD" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_choice_place"
+        app:menu="@menu/activity_choice_place_drawer" />
+
+</android.support.v4.widget.DrawerLayout>

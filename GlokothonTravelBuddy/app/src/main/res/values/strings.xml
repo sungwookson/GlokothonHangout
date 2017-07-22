@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">GlokothonTravelBuddy</string>
     <string name="title_activity_other_people">OtherPeopleActivity</string>
+    <string name="title_activity_choice_place">ChoicePlaceActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

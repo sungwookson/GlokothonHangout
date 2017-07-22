@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="travelbuddy.glokothontravelbuddy.OtherPeopleActivity">
+    tools:context="com.glocoders.hangout.OtherPeopleActivity">
 
 </android.support.constraint.ConstraintLayout>
