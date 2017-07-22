@@ -2,6 +2,7 @@ package com.glocoders.hangout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -10,20 +11,26 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ChoicePlaceActivity extends AppCompatActivity
@@ -36,10 +43,14 @@ public class ChoicePlaceActivity extends AppCompatActivity
     Toolbar toolbar;
 
     EditText edit_where; //어디서
-    EditText edit_date; //언제
+    Button btn_choice_date; // 언제 (버튼)
+    CalendarView choice_date; // 언제 (달력)
+    TextView show_date; //언제 (보여줌)
     Spinner spinner; // 무엇을
     ArrayList<String> playList = new ArrayList<String>(Arrays.asList("식사", "술", "카페, 디저트", "여행친구", "운동", "공부", "행아웃"));
     ArrayAdapter<String> adapter;
+
+    String sendDateToRest;
 
     // REST
     String url = "http://10.10.10.201:8080/user/info";
@@ -50,19 +61,85 @@ public class ChoicePlaceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice_place);
 
+        edit_where = (EditText) findViewById(R.id.edit_where); // 어디서
+//        edit_date = (EditText) findViewById(R.id.edit_date); // 언제
+        btn_choice_date = (Button) findViewById(R.id.btn_choice_date); // 언제 (버튼)
+        choice_date = (CalendarView) findViewById(R.id.choice_date); // 언제 (달력)
+        choice_date.setVisibility(View.INVISIBLE);
+        show_date = (TextView) findViewById(R.id.show_date); // 언제 (보여줌)
+
+        initListener();
         initNavigation();
         initSpinner();
 
     }
 
+
+
+
     public void initSpinner(){
         spinner = (Spinner) findViewById(R.id.spinner_what); // 무엇을
-        edit_where = (EditText) findViewById(R.id.edit_where); // 언제
-        edit_date = (EditText) findViewById(R.id.edit_date); // 무엇을
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, playList);
         spinner.setAdapter(adapter);
     }
+
+
+
+    public void initListener() {
+        /* 언제 */
+        // 버튼
+        btn_choice_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choice_date.setVisibility(View.VISIBLE);
+                Log.d("calendar","[BUTTON] clicked, calendar open!");
+
+            }
+        });
+
+        // 캘린더
+        choice_date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                String date = year+"년 "+month+"월 "+day+"일 ";
+                show_date.setText(date);
+                choice_date.setVisibility(View.INVISIBLE);
+                Log.d("calendar","choiced!");
+
+                sendDateToRest = year+"-";
+
+                if(month < 10)
+                    sendDateToRest = sendDateToRest + "0"+month+"-";
+                else sendDateToRest = sendDateToRest +"-"+month;
+
+                if(day < 10)
+                    sendDateToRest = sendDateToRest + "0"+day;
+                else sendDateToRest = sendDateToRest +"-"+day;
+
+                sendDateToRest += " ";
+
+                long now = System.currentTimeMillis();
+                Date date2 = new Date(now);
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String strNow = sdfNow.format(date2);
+
+                strNow = strNow.substring(strNow.indexOf(' ')+1);
+                Log.d("date_print", strNow);
+
+                String strTime[] = strNow.split(":");
+                Log.d("date_print",strTime[0]+","+strTime[1]+","+strTime[2]);
+
+                sendDateToRest += strTime[0]+"-"+strTime[1]+"-"+strTime[2];
+                Log.d("date_print", sendDateToRest);
+
+
+            }
+        });
+
+
+    }
+
     public void initNavigation() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -146,6 +223,8 @@ public class ChoicePlaceActivity extends AppCompatActivity
     public void pushtoREST() {
         HashMap<String, Object> params = new HashMap<>();
 
+        //언제
+
         //어디서
         String where = edit_where.getText().toString();
         HashMap<String, Double> loc = new HashMap<>();
@@ -160,6 +239,7 @@ public class ChoicePlaceActivity extends AppCompatActivity
 
         params.put("location", loc);
         params.put("category", what);
+        params.put("date",sendDateToRest);
 
         aq = new AQuery(getApplicationContext());
         aq.ajax(url, params, String.class, new AjaxCallback<String>() {
