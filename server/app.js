@@ -2,10 +2,7 @@ let express = require('express');
 let session = require('express-session');
 var bodyParser = require('body-parser');
 let morgan = require('morgan');
-var redis = require("redis"),
-    client = redis.createClient();
-
-
+let database = require('./database');
 let app = express();
 
 app.set('port', 8080);
@@ -27,4 +24,5 @@ app.use(bodyParser.json());
 
 app.listen(app.get('port'), function () {
     console.log("Started :: " + app.get('port'));
+    database.connect(app);
 });
