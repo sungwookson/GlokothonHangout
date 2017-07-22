@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GlokothonTravelBuddy</string>
+    <string name="title_activity_other_people">OtherPeopleActivity</string>
 </resources>
