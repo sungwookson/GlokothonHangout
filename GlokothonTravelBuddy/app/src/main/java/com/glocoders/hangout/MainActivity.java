@@ -14,17 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.glocoders.hangout.database.FirebaseHelper;
+import com.glocoders.hangout.database.UserInfoHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     FirebaseHelper fbHelper;
+    UserInfoHelper userHelper;
     EditText edit_id;
     EditText edit_pwd;
     private static FirebaseAuth mAuth;
+    static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         fbHelper = new FirebaseHelper();
         fbHelper.initUserAuth();
         fbHelper.setAuthListener();
+
+        userHelper = new UserInfoHelper(getApplicationContext(), "user_info.db", 1);
+        user = new User(userHelper.select());
+
+        auto_login();
 
         /* Sign in, Sign up */
         Button sign_in = (Button) findViewById(R.id.sign_in);
@@ -111,4 +121,31 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void auto_login() {
+        if(user.is_auto == true) {
+            signInAccount(user.email, user.passwd);
+        }
+    }
 }
+
+class User{
+    String uid;
+    String email;
+    String passwd;
+    String detail;
+    String profile_image;
+    int age;
+    boolean is_auto;
+
+    public User(List<String> user_info) {
+        uid = user_info.get(0);
+        email = user_info.get(1);
+        passwd = user_info.get(2);
+        detail = user_info.get(3);
+        profile_image = user_info.get(4);
+        age = Integer.parseInt(user_info.get(5));
+        is_auto = (Integer.parseInt(user_info.get(6)) == 1) ? true : false;
+    }
+}
+
