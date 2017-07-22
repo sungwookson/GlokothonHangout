@@ -14,13 +14,12 @@ var router = require("express").Router();
 
 router.route('/info').post(function(req, res){
     
-
 });
 router.route('/info').put(function(req, res){
 
 });
 router.route('/info/:userId').get(function(req, res){    
-
+    console.log(req.params.userId);
 });
 
 
