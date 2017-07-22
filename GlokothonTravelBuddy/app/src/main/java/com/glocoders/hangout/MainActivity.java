@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(getApplicationContext(), ChoicePlaceActivity.class);
+                startActivity(intent);
+
                 signInAccount(edit_id.getText().toString(), edit_pwd.getText().toString());
             }
         });
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (task.isSuccessful() == false) {
+
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                             alertDialogBuilder.setTitle("로그인 실패");
 
