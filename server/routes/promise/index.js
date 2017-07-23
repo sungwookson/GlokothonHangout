@@ -19,8 +19,10 @@ router.route('/:uid').get(function (req, res) {
         } else {
             let category = docs[0].category;
             let date = docs[0].date;
+            let when = docs[0].when;
             promiseModel.find({
                 "category": category,
+                "when" : when,
                 "date" : date,
                 "uid": {
                     $ne: uid
@@ -50,6 +52,7 @@ router.route('/:uid').get(function (req, res) {
                                     "distance": getDistance(location, _docs[i].location),
                                     "plan": _docs[i].plan,
                                     "date": _docs[i].date,
+                                    "when": _docs[i].when,
                                     "profileImage" : imageBase64Encode(results[i].picture)
                                 });
                             }
@@ -85,6 +88,7 @@ router.route('/').post(function (req, res) {
     let category = req.body.category;
     let uid = req.body.uid;
     let date = req.body.date;
+    let when = req.body.when;
     let location = req.body.location;
     let plan = req.body.plan;
 
@@ -93,6 +97,7 @@ router.route('/').post(function (req, res) {
         "category": category,
         "uid": uid,
         "date": date,
+        "when" : when,
         "location": location,
         "plan": plan,
     }).save(function (err, promise) {
