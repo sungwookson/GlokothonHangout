@@ -130,7 +130,8 @@ function deg2rad(deg) {
 
 function imageBase64Encode(src){
     var data = fs.readFileSync(src).toString("base64");
-    var dataUri = util.format("data:%s;base64,%s", mime.lookup(src), data);
+    //var dataUri = util.format("data:%s;base64,%s", mime.lookup(src), data);
+    var dataUri = util.format("%s", data);
     return dataUri;
 }
 module.exports = router;
