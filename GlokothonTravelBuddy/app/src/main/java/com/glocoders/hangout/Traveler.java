@@ -11,6 +11,8 @@ public class Traveler {
     private String name, activity;
     private Double distance;
     private Calendar src, dst;
+    private String when;
+    private String date;
     private int age;
 
     public int getAge() {
@@ -21,13 +23,11 @@ public class Traveler {
         this.age = age;
     }
 
-    public Traveler(String name, String activity, Double distance, int age, Calendar src, Calendar dst) {
+    public Traveler(String name, String activity, Double distance, int age) {
         this.name = name;
         this.activity = activity;
         this.distance = distance;
         this.age = age;
-        this.src = src;
-        this.dst = dst;
     }
 
     public String getName() {

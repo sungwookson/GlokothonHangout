@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by dsm2016 on 2017-07-22.
@@ -57,11 +56,12 @@ public class TravelerListAdapter extends BaseAdapter {
         user_info.setText(traveler.getName() + " / " + Integer.toString(traveler.getAge()));
         distance.setText(traveler.getDistance().toString() + "KM");
 
-        String src_ap = traveler.getSrc().get(Calendar.HOUR) < 12 ? "오후" : "오전";
-        String dst_ap = traveler.getDst().get(Calendar.HOUR) < 12 ? "오후" : "오전";
+//        String src_ap = traveler.getSrc().get(Calendar.HOUR) < 12 ? "오후" : "오전";
+//        String dst_ap = traveler.getDst().get(Calendar.HOUR) < 12 ? "오후" : "오전";
 
-        period.setText(src_ap + Integer.toString(traveler.getSrc().get(Calendar.HOUR)) + " ~ " +
-                       dst_ap + Integer.toString(traveler.getDst().get(Calendar.HOUR)));
+//        period.setText(src_ap + Integer.toString(traveler.getSrc().get(Calendar.HOUR)) + " ~ " +
+//                       dst_ap + Integer.toString(traveler.getDst().get(Calendar.HOUR)));
+        period.setText(traveler.get)
 
         activity.setText(traveler.getActivity());
 

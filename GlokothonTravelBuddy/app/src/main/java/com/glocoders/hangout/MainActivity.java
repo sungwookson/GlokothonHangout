@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                loginHelper.loginSetting(edit_id.getText().toString(), edit_pwd.getText().toString(), is_auto);
-                signInAccount(edit_id.getText().toString(), edit_pwd.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), ChoicePlaceActivity.class);
+                startActivity(intent);
+//                loginHelper.loginSetting(edit_id.getText().toString(), edit_pwd.getText().toString(), is_auto);
+//                signInAccount(edit_id.getText().toString(), edit_pwd.getText().toString());
             }
         });
 

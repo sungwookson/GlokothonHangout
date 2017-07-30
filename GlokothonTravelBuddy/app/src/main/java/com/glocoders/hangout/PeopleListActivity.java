@@ -5,15 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PeopleListActivity extends AppCompatActivity {
     public AQuery aquery;
-    public static String REQUEST_ADDRESS = "10.10.10.179:8080/promise/"; // + UID
+    public static String REQUEST_ADDRESS = "http://10.10.10.201:8080/promise/:id"; // + UID
     //WIFI 4
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,34 +30,36 @@ public class PeopleListActivity extends AppCompatActivity {
         src.set(Calendar.HOUR, 18);
         dst.set(Calendar.HOUR, 23);
 
-        ListView travelerList = (ListView) findViewById(R.id.traveler_list);
+        final ListView travelerList = (ListView) findViewById(R.id.traveler_list);
         final ArrayList<Traveler> travelers = new ArrayList<Traveler>();
         aquery = new AQuery(this);
-        Map<String,Object> param = new HashMap<String,Object>();
+        REQUEST_ADDRESS = REQUEST_ADDRESS.replace(":id","2");
 
-//        param.put("id","asdjasdkasd");
-//        param.put("password","1234");
-//        aquery.ajax(REQUEST_ADDRESS, param, JSONArray.class, new AjaxCallback<JSONArray>(){
-//
-//            @Override
-//            public void callback(String url, JSONArray response, AjaxStatus status) {
-//                for(int i=0;i<response.length();i++){
-//
-//
-//
-//                }
-//            }
-//        })
-        Traveler a = new Traveler("정필성", "낮잠", 2.3, 13,  src, dst);
-        Traveler b = new Traveler("김민종", "민종이형의 경제학 강의", 2.9, 14,  src, dst);
-        Traveler c = new Traveler("윤태훈", "태훈이의 뻘짓 감상", 1.2, 15, src, dst);
+        aquery.ajax(REQUEST_ADDRESS, JSONArray.class, new AjaxCallback<JSONArray>(){
+            @Override
+            public void callback(String url, JSONArray object, AjaxStatus status) {
 
-        travelers.add(a);
-        travelers.add(b);
-        travelers.add(c);
+                for(int i=0;i<object.length();i++){
+                    try {
+                        System.out.println(i);
+                        JSONObject people = object.getJSONObject(i);
+                        Traveler traveler = new Traveler(people.getString("nickname"),
+                                     people.getString("plan") ,
+                                     Double.parseDouble(people.getString("distance")),
+                                     Integer.parseInt(people.getString("age")));
+                        travelers.add(traveler);
 
-        TravelerListAdapter adapter = new TravelerListAdapter(this, travelers, R.layout.people_list_low);
-        travelerList.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    TravelerListAdapter adapter = new TravelerListAdapter(getApplicationContext(), travelers, R.layout.people_list_low);
+                    travelerList.setAdapter(adapter);
+                }
+            }
+        });
+
+
+
 
     }
 }

@@ -143,6 +143,9 @@ public class ChoicePlaceActivity extends AppCompatActivity
                 sendDateToRest += strTime[0]+"-"+strTime[1]+"-"+strTime[2];
                 Log.d("date_print", sendDateToRest);
 
+                sendDateToRest = "2017-07-24";
+                Log.d("SUBED", sendDateToRest);
+
 
             }
         });
@@ -239,8 +242,8 @@ public class ChoicePlaceActivity extends AppCompatActivity
         //어디서
         String where = edit_where.getText().toString();
         HashMap<String, Double> loc = new HashMap<>();
-        loc.put("lon", 126.97);
-        loc.put("lat", 37.56); //만약에 [서울]이 잘 안뜨면 lon, lat의 값을 바꿔보자
+        loc.put("lon", 63.34);
+        loc.put("lat", 49.78); //만약에 [서울]이 잘 안뜨면 lon, lat의 값을 바꿔보자
         //location - lon, lat
 
         //무엇을
@@ -249,16 +252,18 @@ public class ChoicePlaceActivity extends AppCompatActivity
 
         params.put("location", loc);
         params.put("category", what);
+        System.out.println(sendDateToRest);
         params.put("date",sendDateToRest);
         params.put("plan", plan);
         params.put("uid", "4");
+        params.put("when", "아침");
 
         aq = new AQuery(getApplicationContext());
         aq.ajax(url, params, String.class, new AjaxCallback<String>() {
             @Override
             public void callback(String url, String object, AjaxStatus status) {
                 if (status.getCode() == 200 || status.getCode() == 201) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PeopleListActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "입력정보를 확인하세요", Toast.LENGTH_LONG).show();
                 }
