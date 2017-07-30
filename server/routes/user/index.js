@@ -53,7 +53,7 @@ router.route('/info').post(function (req, res) {
 router.route('/info').put(function (req, res) {
     if(req.files) {
         let sampleFile = req.files.sampleFile;
-        sampleFile.mv(picture);
+        sampleFile.mv("profiles/" + req.body.uid + ".jpg");
     }
     let userModel = req.app.get("database").user;
     userModel.update({ "uid": req.body.uid }, {
@@ -79,7 +79,8 @@ router.route('/info/:userId').get(function (req, res) {
         else {
             var src = doc.picture;
             var data = fs.readFileSync(src).toString("base64");
-            var dataUri = util.format("data:%s;base64,%s", mime.lookup(src), data);
+            //var dataUri = util.format("data:%s;base64,%s", mime.lookup(src), data);
+            var dataUri = util.format("%s", data);
             doc.picture = dataUri;
             res.status(200).json(doc);
         }
