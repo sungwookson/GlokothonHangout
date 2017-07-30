@@ -1,5 +1,5 @@
 module.exports = {
-    "dbURL" : "mongodb://localhost:27017/HangOut",
+    "dbURL" : "mongodb://10.10.10.201:27017/HangOut",
     "models" : [
         {
             "name" : "promise",
